@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDos::Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            font-size: 24px;
+        }
+
+        .header {
+            color: red;
+            opacity: 0.2;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 620px;
+            margin: 0 auto;
+        }
+
+        .ele {
+            color: aqua
+        }
+
+        .eleset {
+            color: black
+        }
+
+        .isTick {
+            text-decoration: line-through;
+            color: rgb(196, 194, 194);
+        }
+
+        .inputmonobox {
+            border-style: groove;
+            border-width: 1px;
+            border-color: rgb(226, 226, 226);
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .allright0 {
+            color: silver;
+            font-weight: bold;
+            width: 50px;
+        }
+
+        .allright {
+            color: black;
+        }
+
+        .allright2 {
+            color: white;
+        }
+
+        .inputst {
+            background: transparent;
+            border-top: transparent !important;
+            border-left: transparent !important;
+            border-right: transparent !important;
+            border-bottom: transparent !important;
+        }
+
+        .inputst:focus {
+            outline: none;
+        }
+
+        button {
+            border: none;
+            background-color: white;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: row;
+            border-style: groove;
+            border-width: 1px;
+            border-color: rgb(226, 226, 226);
+            color: grey;
+            box-shadow: 0px 10px 10px grey;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .footerStatus {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .footerElement {
+            font-size: 16px;
+            margin-right: 20px;
+        }
+
+        .footerElementActive {
+            border-style: dotted;
+            border-width: 2px;
+            border-color: pink;
+            border-radius: 5px;
+        }
+
+        .itemLeft {
+            margin-right: 20px;
+            font-size: 16px;
+        }
+
+        .listbox {
+            border-style: groove;
+            border-width: 0.5px;
+            border-color: rgb(236, 236, 236);
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: white;
+        }
+
+        .listdetail {
+            min-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .checkbox {
+            background-image: url("uncheckbox.png");
+            width: 24px;
+            height: 24px;
+            background-size: cover;
+            margin-right: 5%;
+            margin-left: 2%;
+        }
+
+        .checkbox.checkboxActive {
+            background-image: url("incheckbox.png");
+        }
+
+        .xbutton {
+            color: rgb(146, 25, 25);
+            font-size: 15px;
+        }
+
+        ::placeholder {
+            font-style: italic;
+            color: thistle;
+            opacity: 0.8;
+            font-size: 20px;
+            font-family: 'Courier New', Courier, monospace
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .arrange {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="root">
+
+        <h1 class='header'>todos</h1>
+        <box class='box'>
+            <div class="container">
+                <div class="arrange">
+                    <div class="inputmonobox">
+                        <button class="allright0 col-sm-2" :class="{'allright':alltick, 'allright2':bad.length==0}" v-on:click="checkall">V</button>
+                        <input placeholder="What needs to be done?" v-model="good" v-on:keyup.enter="set" class="inputst"></input>
+                    </div>
+
+                    <list class="listbox" v-for="(loop,index) in bad" v-bind:key=loop.id v-on:closed="remove(loop.id)" v-on:on-change="tick(loop.id)" v-show="modeAll || (modeActive && !loop.check) || (modeCompleted && loop.check)" :bool='loop.check' :titlena='loop.title'
+                        :idja='loop.id' v-on:input-edit="editList">
+                        {{loop.title}}
+                    </list>
+                </div>
+
+                <div class="footer" v-show="bad.length>0">
+                    <div class="itemLeft col-sm-3">{{itemLeft}}</div>
+                    <div class="footerStatus col-sm-6">
+                        <div class="footerElement" :class="{'footerElementActive':modeAll}" v-on:click="allActive">All</div>
+                        <div class="footerElement" :class="{'footerElementActive':modeActive}" v-on:click="activeActive">Active</div>
+                        <div class="footerElement" :class="{'footerElementActive':modeCompleted}" v-on:click="completedActive">Completed</div>
+                    </div>
+                    <div class="footerElement col-sm-3" v-on:click="clearall" v-show="AnyActive">Clear completed</div>
+                </div>
+
+            </div>
+        </box>
+
+    </div>
+
+    <script>
+        Vue.component('box', {
+            template: `
+                <div>
+                    <slot></slot>
+                </div>
+            `,
+
+        })
+        Vue.component('list', {
+            template: `
+                <div class="listbox" v-on:mouseover="mouseOver" v-on:mouseleave="mouseLeave">
+
+                    <div class="checkbox" :class="{'checkboxActive':this.bool}" v-on:click="$emit('on-change')" > </div>
+
+                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck"> <slot></slot> {{idja}}</div>
+
+                    <input class="listdetail" v-show="this.editCheck" v-model="this.titlena" v-on:keyup.enter="changeEditBack" ></input> 
+
+                    <button class="xbutton" v-show="this.hover && !this.editCheck" v-on:click="changeEdit"> Edit </button>
+
+                    <div class="xbutton" v-on:click="$emit('closed')" v-show="this.hover && !this.editCheck" > x </div>
+                </div>
+            `,
+            props: ['bool', 'titlena', 'idja'],
+            data() {
+                return {
+                    hover: false,
+                    editCheck: false
+                }
+            },
+            methods: {
+                mouseOver: function() {
+                    this.hover = true;
+                },
+                mouseLeave: function() {
+                    this.hover = false;
+                },
+                changeEdit: function() {
+                    this.editCheck = true;
+                },
+                changeEditBack: function() {
+                    object = {
+
+                        title: titlena
+
+                    }
+                    this.$emit('input-edit', object);
+                    this.editCheck = false;
+
+                }
+            }
+
+        })
+
+        new Vue({
+            el: '.root',
+            data: {
+                good: '',
+                bad: [],
+                nextId: 0,
+                alltick: false,
+                AnyActive: false,
+                bool: false,
+                modeAll: true,
+                modeActive: false,
+                modeCompleted: false
+
+            },
+            methods: {
+                set: function() {
+                    this.bad.push({
+                        id: this.nextId++,
+                        title: this.good,
+                        check: false,
+                        mode: true
+                    })
+                    this.good = ''
+                },
+                clearall: function() {
+                    var mem = [];
+                    for (var i = 0; i < this.bad.length; i++) {
+
+
+                        if (this.bad[i].check == true) {
+
+                            mem.push(i)
+
+                        }
+
+                    }
+
+                    for (var i = mem.length - 1; i >= 0; i--) {
+                        this.bad.splice(mem[i], 1)
+                        this.alltick = false
+                    }
+                    this.AnyActive = false
+                },
+                tick: function(value) {
+                    if (this.bad.find(x => x.id === value).check == false) {
+                        this.bad.find(x => x.id === value).check = true;
+
+
+                    } else {
+                        this.bad.find(x => x.id === value).check = false;
+
+
+                    }
+                    var count = 0
+                    for (i in this.bad) {
+                        if (this.bad[i].check == true) count++
+                    }
+                    if (count == this.bad.length) {
+                        this.alltick = true
+                    } else {
+                        this.alltick = false
+                    }
+                    if (count > 0) {
+                        this.AnyActive = true
+                    } else {
+                        this.AnyActive = false
+                    }
+
+                },
+                remove: function(value) {
+                    var index = this.bad.findIndex(x => x.id === value);
+
+                    if (index !== -1) this.bad.splice(index, 1);
+                    var count = 0;
+                    for (i in this.bad) {
+                        if (this.bad[i].check == false) {
+                            count++
+                        }
+                    }
+                    if (count == this.bad.length) {
+                        this.AnyActive = false
+                    }
+
+
+
+                },
+                checkall: function() {
+                    if (this.alltick == false) {
+                        for (i in this.bad) {
+                            this.bad[i].check = true;
+                            this.alltick = true;
+                        }
+                        this.AnyActive = true;
+                    } else {
+                        for (i in this.bad) {
+                            this.bad[i].check = false;
+                            this.alltick = false;
+                        }
+                        this.AnyActive = false;
+                    }
+
+                },
+
+                allActive: function() {
+                    for (i in this.bad) {
+                        this.bad[i].mode = true;
+                    }
+                    this.modeAll = true;
+                    this.modeActive = false;
+                    this.modeCompleted = false;
+                },
+                activeActive: function() {
+                    for (i in this.bad) {
+                        if (this.bad[i].check == false) {
+                            this.bad[i].mode = true;
+                        } else {
+                            this.bad[i].mode = false;
+                        }
+                    }
+                    this.modeAll = false;
+                    this.modeActive = true;
+                    this.modeCompleted = false;
+                },
+                completedActive: function() {
+                    for (i in this.bad) {
+                        if (this.bad[i].check == true) {
+                            this.bad[i].mode = true;
+                        } else {
+                            this.bad[i].mode = false;
+                        }
+                    }
+                    this.modeAll = false;
+                    this.modeActive = false;
+                    this.modeCompleted = true;
+                },
+                editList: function(object) {
+                    var index = this.bad.findIndex(x => x.title == object.title);
+                    this.bad[0].title = object.title;
+                }
+
+            },
+            computed: {
+                itemLeft() {
+                    var count = 0;
+                    for (i in this.bad) {
+                        if (this.bad[i].check == false) {
+                            count++
+                        }
+                    }
+                    if (count <= 1) {
+                        return count + ' item left'
+                    }
+                    return count + ' items left'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

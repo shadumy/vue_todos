@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ทดลอง</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <box :bad="good" v-on:func01="func02"></box>
+        <br>
+        <h1>{{good}}</h1>
+    </div>
+    <script>
+        Vue.component('box', {
+            template: `
+                <input v-model="this.bad" @keyup.enter.prevent="f1"></input>
+            `,
+            props: ['bad'],
+            methods: {
+                f1: function() {
+                    this.$emit('func01', bad)
+                }
+            }
+        })
+
+
+        var app = new Vue({
+            el: '#root',
+            data: {
+                good: 'abc'
+            },
+            methods: {
+                func02: function(value) {
+                    this.good = value;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
