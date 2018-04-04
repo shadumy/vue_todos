@@ -1,0 +1,72 @@
+<!Doctype html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title></title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+    <style type="text/css">
+        body {
+            padding: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root" class="container">
+        <message title="Hello World" body="Hey you! Can you hear my voice?">
+
+        </message>
+        <br>
+        <message title="Hello Girls" body="Excuse me! Can you see my heart?">
+
+        </message>
+
+    </div>
+    <script>
+        Vue.component('message', {
+            props: ['title', 'body'],
+            template: ` 
+            <div>
+                <article class="message" v-show="isVisible">
+                    <div class="message-header">
+                        {{title}}
+                        <button type="button" @click="hideModal">x</button>
+                    </div>
+                    <div class="message-body">
+                        {{body}}
+                    </div>
+                </article>
+            </div>
+            ` ,
+
+            methods: {
+                hideModal() {
+                    this.isVisible = false;
+                }
+            },
+
+            data() {
+                return {
+                    isVisible: true
+                }
+            }
+
+        });
+
+        new Vue({
+            el: "#root", //element
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

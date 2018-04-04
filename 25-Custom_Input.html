@@ -1,0 +1,67 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title>My App Lesson25</title>
+
+
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <!--<input type="text" v-model="coupon">-->
+        <!--<input type="text" :value="coupon" @input="coupon = $event.target.value">-->
+
+        <coupon v-model="coupon">
+
+        </coupon>
+
+    </div>
+
+
+
+    <script>
+        Vue.component('coupon', {
+            props: ['code'],
+            template: `  
+                <input type="text" :value="code" @input="updateCode($event.target.value)" ref="input">
+                
+            `,
+            methods: {
+                updateCode(code) {
+
+                    if (code === "ALLFREE") {
+                        alert('This coupon is no longer valid.')
+                        this.$refs.input.value = code = '';
+
+                    }
+                    this.$emit('input', code)
+                }
+            }
+        })
+        new Vue({
+
+            el: '#app',
+
+            data: {
+                coupon: "FREEBIE"
+            }
+
+
+        })
+
+
+    </script>
+
+</body>
+
+</html>

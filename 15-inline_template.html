@@ -1,0 +1,59 @@
+<!Doctype html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="root" class="container">
+        <progress-view inline-template>
+            <!--Inline-template components must have exactly one child element.-->
+            <div>
+                <h1>Your Progress Through This Course Is {{ completionRate }}</h1>
+
+                <p>
+                    <button @click="completionRate += 10">Update Completion Rate</button>
+                </p>
+            </div>
+        </progress-view>
+
+    </div>
+    <script>
+
+        Vue.component('progress-view', {
+
+            template: ` 
+                
+            
+            ` ,
+
+            methods: {
+
+            },
+            data() {
+                return { completionRate: 0 };
+            }
+
+        });
+
+
+        new Vue({
+            el: "#root", //element
+
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

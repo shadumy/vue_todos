@@ -1,0 +1,69 @@
+<!Doctype html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title></title>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="root">
+        <task>Go to the Store</task>
+        <task>Go to the Bank</task>
+        <task>Go to the School</task>
+        <task>Go to Hell</task>
+
+        <br>
+        <task-list></task-list>
+
+    </div>
+    <script>
+        Vue.component('task-list', {
+
+            template: ` 
+            <div>
+                <task v-for="a in tasks" v-if="a.complete"> {{ a.task }} </task>
+            </div>
+            ` ,
+
+            data() {
+                return {
+                    tasks: [
+                        { task: 'Go to the store', complete: true },
+                        { task: 'Go to the email', complete: false },
+                        { task: 'Go to the farm', complete: true },
+                        { task: 'Go to heaven', complete: false },
+                    ]
+
+
+                }
+            }
+
+        });
+
+
+
+        Vue.component('task', {
+
+            template: '<li><slot></slot></li>'
+
+        });
+
+
+
+        new Vue({
+            el: "#root", //element
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!Doctype html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+    <style>
+        body {
+            padding-top: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root" class="container">
+        <coupon @applied="onCouponApplied"></coupon>
+        <!-- @ at this point means v-on ใช้เมื่อต้องการสื่อสารระหว่าง parent กับ child -->
+
+        <h1 v-if="couponApplied">You used a coupon!</h1>
+
+    </div>
+    <script>
+        Vue.component('coupon', {
+
+            template: ` 
+            <input placeholder="Enter your coupon code" @blur="onCouponApplied">
+            
+            ` ,
+
+            methods: {
+                onCouponApplied() {
+                    this.$emit('applied');
+                }
+            }
+
+        });
+
+
+        new Vue({
+            el: "#root", //element
+            data: {
+                couponApplied: false
+            },
+            methods: {
+                onCouponApplied() {
+                    this.couponApplied = true;
+                }
+            }
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

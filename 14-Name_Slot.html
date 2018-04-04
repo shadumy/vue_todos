@@ -1,0 +1,78 @@
+<!Doctype html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="root" class="container">
+
+        <modal>
+            <template slot="header">หัวข้อ</template>
+
+            それはコンテントです。
+
+            <div slot="footer">
+                <a class="button is-primary">บันทึก</a>
+                <a class="button">ยกเลิก</a>
+            </div>
+        </modal>
+    </div>
+    <script>
+
+        Vue.component('modal', {
+
+            template: ` 
+                <div class="modal is-active">
+
+                <div class="modal-background"></div>
+
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">
+                            <slot name="header">></slot>
+                        </p>
+                        <button class="delete" aria-label="close"></button>
+                    </header>
+                    
+                    <section class="modal-card-body">
+                        <slot>Default content here</slot>  <!-set default text if there is no text in modal.->
+                    </section>
+                    
+                    <footer class="modal-card-foot">
+                        <slot name="footer">
+                            
+                        </slot>
+                    </footer>
+                </div>
+                </div>
+            
+            ` ,
+
+            methods: {
+
+            }
+
+        });
+
+
+        new Vue({
+            el: "#root", //element
+
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

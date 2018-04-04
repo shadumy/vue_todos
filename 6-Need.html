@@ -1,0 +1,85 @@
+<!Doctype html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title></title>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="root">
+        <h1>{{ message.split('').reverse().join('') }}</h1>
+        <h1>{{ reversedMessage}}</h1>
+
+        <br>
+        <br>
+        <h1>All Task</h1>
+        <ul>
+            <li v-for="task in tasks" v-text="task.description"></li>
+            <li>===================================</li>
+            <li v-for="task in tasks" v-if="task.completed" v-text="task.description"></li>
+        </ul>
+        <h1>Incomplete Task</h1>
+        <ul>
+            <li v-for="task in incompleteTasks" v-text="task.description"></li>
+        </ul>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#root", //element
+            data: {
+                message: 'Hello You',
+                tasks: [{
+                        description: 'Go to the store to buy condom',
+                        completed: true
+                    },
+                    {
+                        description: 'Finish Masterbreder',
+                        completed: false
+                    },
+                    {
+                        description: 'Make a kid',
+                        completed: false
+                    },
+                    {
+                        description: 'Clear bed',
+                        completed: false
+                    },
+                    {
+                        description: 'Make a clothe',
+                        completed: false
+                    },
+                    {
+                        description: 'Clean room',
+                        completed: true
+                    },
+                ]
+
+
+            },
+
+            methods: {
+
+            },
+
+            computed: {
+                reversedMessage() {
+                    return this.message.split('').reverse().join('');
+                },
+                incompleteTasks() {
+                    return this.tasks.filter(task => !task.completed);
+                }
+            }
+
+        })
+    </script>
+
+
+</body>
+
+</html>
