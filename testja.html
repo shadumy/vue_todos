@@ -11,164 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        body {
-            font-size: 24px;
-        }
-
-        .header {
-            color: red;
-            opacity: 0.2;
-            text-align: center;
-            font-size: 50px;
-        }
-
-        .box {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 620px;
-            margin: 0 auto;
-        }
-
-        .ele {
-            color: aqua
-        }
-
-        .eleset {
-            color: black
-        }
-
-        .isTick {
-            text-decoration: line-through;
-            color: rgb(196, 194, 194);
-        }
-
-        .inputmonobox {
-            border-style: groove;
-            border-width: 1px;
-            border-color: rgb(226, 226, 226);
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .allright0 {
-            color: silver;
-            font-weight: bold;
-            width: 50px;
-        }
-
-        .allright {
-            color: black;
-        }
-
-        .allright2 {
-            color: white;
-        }
-
-        .inputst {
-            background: transparent;
-            border-top: transparent !important;
-            border-left: transparent !important;
-            border-right: transparent !important;
-            border-bottom: transparent !important;
-        }
-
-        .inputst:focus {
-            outline: none;
-        }
-
-        button {
-            border: none;
-            background-color: white;
-        }
-
-        .footer {
-            display: flex;
-            flex-direction: row;
-            border-style: groove;
-            border-width: 1px;
-            border-color: rgb(226, 226, 226);
-            color: grey;
-            box-shadow: 0px 10px 10px grey;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .footerStatus {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .footerElement {
-            font-size: 16px;
-            margin-right: 20px;
-        }
-
-        .footerElementActive {
-            border-style: dotted;
-            border-width: 2px;
-            border-color: pink;
-            border-radius: 5px;
-        }
-
-        .itemLeft {
-            margin-right: 20px;
-            font-size: 16px;
-        }
-
-        .listbox {
-            border-style: groove;
-            border-width: 0.5px;
-            border-color: rgb(236, 236, 236);
-            padding-top: 10px;
-            padding-bottom: 10px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            background-color: white;
-        }
-
-        .listdetail {
-            min-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .checkbox {
-            background-image: url("uncheckbox.png");
-            width: 24px;
-            height: 24px;
-            background-size: cover;
-            margin-right: 5%;
-            margin-left: 2%;
-        }
-
-        .checkbox.checkboxActive {
-            background-image: url("incheckbox.png");
-        }
-
-        .xbutton {
-            color: rgb(146, 25, 25);
-            font-size: 15px;
-        }
-
-        ::placeholder {
-            font-style: italic;
-            color: thistle;
-            opacity: 0.8;
-            font-size: 20px;
-            font-family: 'Courier New', Courier, monospace
-        }
-
-        .container {
-            width: 100%;
-        }
-
-        .arrange {
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
+    <link rel="stylesheet" href="stylelist.css">
 </head>
 
 <body>
@@ -220,11 +63,11 @@
 
                     <div class="checkbox" :class="{'checkboxActive':this.bool}" v-on:click="$emit('on-change')" > </div>
 
-                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck"> <slot></slot> {{idja}}</div>
+                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck"   v-on:dblclick="changeEdit"> <slot></slot></div>
 
                     <input class="listdetail" v-show="this.editCheck" v-model="this.titlena" v-on:keyup.enter="changeEditBack" ></input> 
 
-                    <button class="xbutton" v-show="this.hover && !this.editCheck" v-on:click="changeEdit"> Edit </button>
+                    
 
                     <div class="xbutton" v-on:click="$emit('closed')" v-show="this.hover && !this.editCheck" > x </div>
                 </div>

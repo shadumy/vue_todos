@@ -9,6 +9,7 @@
 <body>
     <div id="root">
         <box :bad="good" v-on:func01="func02"></box>
+        <div @dblclick="func02('love')">กดเบาๆ</div>
         <br>
         <h1>{{good}}</h1>
     </div>
