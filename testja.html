@@ -27,8 +27,8 @@
                         <input placeholder="What needs to be done?" v-model="good" v-on:keyup.enter="set" class="inputst"></input>
                     </div>
 
-                    <list class="listbox" v-for="(loop,index) in bad" v-bind:key=loop.id v-on:closed="remove(loop.id)" v-on:on-change="tick(loop.id)" v-show="modeAll || (modeActive && !loop.check) || (modeCompleted && loop.check)" :bool='loop.check' :titlena='loop.title'
-                        :idja='loop.id' v-on:input-edit="editList">
+                    <list class="listbox" v-for="(loop,index) in bad" v-bind:key=loop.id v-on:closed="remove(loop.id)" v-on:on-change="tick(loop.id)" v-show="modeAll || (modeActive && !loop.check) || (modeCompleted && loop.check)" :bool='loop.check' v-bind:titlena='loop.title'
+                        v-bind:idja='loop.id' v-on:input-edit="editList">
                         {{loop.title}}
                     </list>
                 </div>
@@ -63,7 +63,7 @@
 
                     <div class="checkbox" :class="{'checkboxActive':this.bool}" v-on:click="$emit('on-change')" > </div>
 
-                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck"   v-on:dblclick="changeEdit"> <slot></slot></div>
+                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck" v-on:dblclick="changeEdit"> <slot></slot></div>
 
                     <input class="listdetail" v-show="this.editCheck" v-model="this.titlena" v-on:keyup.enter="changeEditBack" ></input> 
 
@@ -90,12 +90,8 @@
                     this.editCheck = true;
                 },
                 changeEditBack: function() {
-                    object = {
-
-                        title: titlena
-
-                    }
-                    this.$emit('input-edit', object);
+                    var x = titlena; var y = this.idja;
+                    this.$emit('input-edit', x,y);
                     this.editCheck = false;
 
                 }
@@ -238,9 +234,9 @@
                     this.modeActive = false;
                     this.modeCompleted = true;
                 },
-                editList: function(object) {
-                    var index = this.bad.findIndex(x => x.title == object.title);
-                    this.bad[0].title = object.title;
+                editList: function(object,id) {
+                    var index = this.bad.findIndex(x => x.id == id);
+                    this.bad[index].title = object;
                 }
 
             },

@@ -9,19 +9,20 @@
 <body>
     <div id="root">
         <box :bad="good" v-on:func01="func02"></box>
-        <div @dblclick="func02('love')">กดเบาๆ</div>
+        <div @dblclick="func02">กดเบาๆ</div>
         <br>
         <h1>{{good}}</h1>
     </div>
     <script>
         Vue.component('box', {
             template: `
-                <input v-model="this.bad" @keyup.enter.prevent="f1"></input>
+                <input v-model="this.bad" @keyup.enter="f1"></input>
             `,
             props: ['bad'],
             methods: {
                 f1: function() {
-                    this.$emit('func01', bad)
+                    x= bad
+                    this.$emit('func01', x)
                 }
             }
         })
@@ -30,7 +31,8 @@
         var app = new Vue({
             el: '#root',
             data: {
-                good: 'abc'
+                good: 'abc',
+                
             },
             methods: {
                 func02: function(value) {
