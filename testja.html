@@ -7,10 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDos::Vue.js</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="stylelist.css">
 </head>
 
@@ -24,10 +28,12 @@
                 <div class="arrange">
                     <div class="inputmonobox">
                         <button class="allright0 col-sm-2" :class="{'allright':alltick, 'allright2':bad.length==0}" v-on:click="checkall">V</button>
-                        <input placeholder="What needs to be done?" v-model="good" v-on:keyup.enter="set" class="inputst"></input>
+                        <input placeholder="What needs to be done?" autofocus autocomplete="off" v-model="good" v-on:keyup.enter="set" @blur="set"
+                            class="inputst"></input>
                     </div>
 
-                    <list class="listbox" v-for="(loop,index) in bad" v-bind:key=loop.id v-on:closed="remove(loop.id)" v-on:on-change="tick(loop.id)" v-show="modeAll || (modeActive && !loop.check) || (modeCompleted && loop.check)" :bool='loop.check' v-bind:titlena='loop.title'
+                    <list class="listbox" v-for="(loop,index) in bad" v-bind:key=loop.id v-on:closed="remove(loop.id)" v-on:on-change="tick(loop.id)"
+                        v-show="modeAll || (modeActive && !loop.check) || (modeCompleted && loop.check)" :bool='loop.check' v-bind:titlena='loop.title'
                         v-bind:idja='loop.id' v-on:input-edit="editList">
                         {{loop.title}}
                     </list>
@@ -36,9 +42,15 @@
                 <div class="footer" v-show="bad.length>0">
                     <div class="itemLeft col-sm-3">{{itemLeft}}</div>
                     <div class="footerStatus col-sm-6">
-                        <div class="footerElement" :class="{'footerElementActive':modeAll}" v-on:click="allActive">All</div>
-                        <div class="footerElement" :class="{'footerElementActive':modeActive}" v-on:click="activeActive">Active</div>
-                        <div class="footerElement" :class="{'footerElementActive':modeCompleted}" v-on:click="completedActive">Completed</div>
+                        <a href="#all">
+                            <div class="footerElement" :class="{'footerElementActive':modeAll}" v-on:click="allActive">All</div>
+                        </a>
+                        <a href="#active">
+                            <div class="footerElement" :class="{'footerElementActive':modeActive}" v-on:click="activeActive">Active</div>
+                        </a>
+                        <a href="#completed">
+                            <div class="footerElement" :class="{'footerElementActive':modeCompleted}" v-on:click="completedActive">Completed</div>
+                        </a>
                     </div>
                     <div class="footerElement col-sm-3" v-on:click="clearall" v-show="AnyActive">Clear completed</div>
                 </div>
@@ -63,67 +75,133 @@
 
                     <div class="checkbox" :class="{'checkboxActive':this.bool}" v-on:click="$emit('on-change')" > </div>
 
-                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck" v-on:dblclick="changeEdit"> <slot></slot></div>
+                    <div class="listdetail" :class="{'isTick': this.bool}" v-show="!this.editCheck" v-on:dblclick="changeEdit" > <slot></slot></div>
 
-                    <input class="listdetail" v-show="this.editCheck" v-model="this.titlena" v-on:keyup.enter="changeEditBack" ></input> 
-
-                    
+                    <input class="listdetail" v-show="this.editCheck" v-model="this.titlena" v-todo-focus="this.titlena==this.titleChangeboolean" @keyup.enter="changeEditBack"   ></input> 
 
                     <div class="xbutton" v-on:click="$emit('closed')" v-show="this.hover && !this.editCheck" > x </div>
+                    
                 </div>
             `,
             props: ['bool', 'titlena', 'idja'],
             data() {
                 return {
                     hover: false,
-                    editCheck: false
+                    editCheck: false,
+                    titleChangeboolean: null,
+                    old: ''
                 }
             },
             methods: {
-                mouseOver: function() {
+                mouseOver: function () {
                     this.hover = true;
                 },
-                mouseLeave: function() {
+                mouseLeave: function () {
                     this.hover = false;
                 },
-                changeEdit: function() {
+                changeEdit: function () {
+                    if (typeof titlena != 'undefined') {
+                        this.old = titlena;
+                    }
+                    this.titleChangeboolean = this.titlena;
+
                     this.editCheck = true;
+                    console.log('$$$ New Round $$$')
+                    console.log('titlechangeboolean: ', this.titleChangeboolean, 'this.titlena: ', this.titlena, 'this.old: ', this.old)
+
                 },
-                changeEditBack: function() {
-                    var x = titlena; var y = this.idja;
-                    this.$emit('input-edit', x,y);
+                changeEditBack: function () {
+                    var x = ''; var y = this.idja;
+                    if (typeof titlena != 'undefined') {
+                        console.log('****titlena****', titlena)
+                    }
+                    if (typeof titlena == 'undefined') {
+                        x = this.titlena
+                        console.log('ifบน')
+                    } else if (titlena == this.old) {
+                        x = this.titleChangeboolean
+                        console.log('ifกลาง')
+                    }
+                    else if (titlena != this.titleChangeboolean) {
+                        x = titlena
+                        console.log('ifล่าง')
+                    }
+                    console.log('x now is ', x)
+                    console.log('changeBoolean: ', this.titleChangeboolean, ' titlena:', typeof titlena, ' this.titlena:', this.titlena, ' x is:', x)
+
+
+                    console.log('************************')
+                    this.$emit('input-edit', x, y);
+
+
+
+
+                    this.titleChangeboolean = null;
+
                     this.editCheck = false;
 
+                }
+            },
+            directives: {
+                'todo-focus': function (el, binding) {
+                    if (binding.value) {
+                        el.focus();
+                    }
                 }
             }
 
         })
 
+        var STORAGE_KEY = 'vue-js-todo'
+        var todoStorage = {
+            fetch: function () {
+                var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                return todos;
+            },
+            save: function (todos) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+            }
+        }
+
         new Vue({
             el: '.root',
             data: {
                 good: '',
-                bad: [],
+                bad: todoStorage.fetch(),
                 nextId: 0,
                 alltick: false,
                 AnyActive: false,
                 bool: false,
                 modeAll: true,
                 modeActive: false,
-                modeCompleted: false
+                modeCompleted: false,
 
             },
+            watch: {
+                bad: {
+                    handler: function (bad) {
+                        todoStorage.save(bad);
+                    }
+                }
+            },
+
             methods: {
-                set: function() {
-                    this.bad.push({
-                        id: this.nextId++,
-                        title: this.good,
-                        check: false,
-                        mode: true
-                    })
+
+                set: function () {
+                    var text = this.good.trim()
+
+                    if (text.length > 0) {
+                        this.bad.push({
+                            id: this.nextId++,
+                            title: text,
+                            check: false,
+                            mode: true
+                        })
+                    }
+
                     this.good = ''
                 },
-                clearall: function() {
+                clearall: function () {
                     var mem = [];
                     for (var i = 0; i < this.bad.length; i++) {
 
@@ -142,7 +220,7 @@
                     }
                     this.AnyActive = false
                 },
-                tick: function(value) {
+                tick: function (value) {
                     if (this.bad.find(x => x.id === value).check == false) {
                         this.bad.find(x => x.id === value).check = true;
 
@@ -168,7 +246,7 @@
                     }
 
                 },
-                remove: function(value) {
+                remove: function (value) {
                     var index = this.bad.findIndex(x => x.id === value);
 
                     if (index !== -1) this.bad.splice(index, 1);
@@ -185,7 +263,7 @@
 
 
                 },
-                checkall: function() {
+                checkall: function () {
                     if (this.alltick == false) {
                         for (i in this.bad) {
                             this.bad[i].check = true;
@@ -202,7 +280,7 @@
 
                 },
 
-                allActive: function() {
+                allActive: function () {
                     for (i in this.bad) {
                         this.bad[i].mode = true;
                     }
@@ -210,7 +288,7 @@
                     this.modeActive = false;
                     this.modeCompleted = false;
                 },
-                activeActive: function() {
+                activeActive: function () {
                     for (i in this.bad) {
                         if (this.bad[i].check == false) {
                             this.bad[i].mode = true;
@@ -222,7 +300,7 @@
                     this.modeActive = true;
                     this.modeCompleted = false;
                 },
-                completedActive: function() {
+                completedActive: function () {
                     for (i in this.bad) {
                         if (this.bad[i].check == true) {
                             this.bad[i].mode = true;
@@ -234,10 +312,12 @@
                     this.modeActive = false;
                     this.modeCompleted = true;
                 },
-                editList: function(object,id) {
+                editList: function (object, id) {
                     var index = this.bad.findIndex(x => x.id == id);
                     this.bad[index].title = object;
-                }
+                },
+
+
 
             },
             computed: {
@@ -255,7 +335,12 @@
                 }
             }
         })
+
+
+
     </script>
+    <script src="store.js"></script>
+
 </body>
 
 </html>

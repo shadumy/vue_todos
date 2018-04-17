@@ -10,6 +10,11 @@
     <div id="root">
         <box :bad="good" v-on:func01="func02"></box>
         <div @dblclick="func02">กดเบาๆ</div>
+        <a href="#googleee">
+            <button>
+                งงๆ
+            </button>
+        </a>
         <br>
         <h1>{{good}}</h1>
     </div>
@@ -20,8 +25,8 @@
             `,
             props: ['bad'],
             methods: {
-                f1: function() {
-                    x= bad
+                f1: function () {
+                    x = bad
                     this.$emit('func01', x)
                 }
             }
@@ -32,10 +37,10 @@
             el: '#root',
             data: {
                 good: 'abc',
-                
+
             },
             methods: {
-                func02: function(value) {
+                func02: function (value) {
                     this.good = value;
                 }
             }
